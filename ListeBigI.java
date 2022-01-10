@@ -9,7 +9,7 @@ public class ListeBigI {
     /** Constructeur d'une liste vide
      */
     public ListeBigI() {
-	this.tete = null; 
+	 this.tete = null;
     }
 
     /** Constructeur d'une liste a partir d'un maillon
@@ -23,8 +23,12 @@ public class ListeBigI {
     public ListeBigI(BigInteger x) {
     	this.tete = new Maillon(x); // ou bien: this(new Maillon(x));
     }
-    
-  /** @param tabListe est un tableau contenant les elements de la liste
+
+	public Maillon getTete() {
+		return tete;
+	}
+
+	/** @param tabListe est un tableau contenant les elements de la liste
      * Pre-requis : aucun
      */
     public ListeBigI(BigInteger[] tabListe) {
@@ -44,19 +48,19 @@ public class ListeBigI {
      * construit une liste completement disjointe de la liste l 
      */
     public ListeBigI(ListeBigI l) { // constructeur par recopie profonde
-	this(); 
-	if (! l.estVide()) {
+		this();
+		if (! l.estVide()) {
 
-	    this.tete = new Maillon (l.tete.getVal());
-	    Maillon curThis = this.tete;
-	    Maillon curL = l.tete.getSuiv();
+			this.tete = new Maillon (l.tete.getVal());
+			Maillon curThis = this.tete;
+			Maillon curL = l.tete.getSuiv();
 
-	    while (curL != null) {
-		curThis.setSuiv (new Maillon(curL.getVal())); // creation et accrochage du maillon suivant
-		curThis = curThis.getSuiv();
-		curL = curL.getSuiv();
-	    }
-	}
+			while (curL != null) {
+			curThis.setSuiv (new Maillon(curL.getVal())); // creation et accrochage du maillon suivant
+			curThis = curThis.getSuiv();
+			curL = curL.getSuiv();
+			}
+		}
     }
 
     public boolean estVide() {
