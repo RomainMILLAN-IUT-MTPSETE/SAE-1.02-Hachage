@@ -9,7 +9,7 @@ public class ListeBigI {
     /** Constructeur d'une liste vide
      */
     public ListeBigI() {
-	 this.tete = null;
+		this.tete = null;
     }
 
     /** Constructeur d'une liste a partir d'un maillon

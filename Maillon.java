@@ -28,7 +28,7 @@ public class Maillon {
     }
 
     public void setSuiv (Maillon m) {
-	this.suivant = m;
+	    this.suivant = m;
     }
 
     public String toString () {

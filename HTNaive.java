@@ -165,13 +165,16 @@ public class HTNaive {
         Maillon courant = resultat.getTete();
 
         for(int i=0; i<t.length; i++){
-            if(t[i].getTete()!=null){
-                if(i==0){
-                    Maillon newMaillon = new Maillon(t[i].getTete().getVal());
-                    courant.setSuiv(newMaillon);
-                    courant = courant.getSuiv();
+            if(resultat.getTete() == null){
+                if(t[i].getTete() != null){
+                    resultat.ajoutTete(t[i].getTete().getVal());
                     
-                }else{
+                }
+            }else {
+                if(courant == null){
+                    courant = resultat.getTete();
+                }
+                if(t[i].getTete() != null && t[i].getTete().getVal() != null){
                     Maillon newMaillon = new Maillon(t[i].getTete().getVal());
                     courant.setSuiv(newMaillon);
                     courant = courant.getSuiv();
@@ -193,9 +196,13 @@ public class HTNaive {
             resultat += "t[" + i + "]: ";
             Maillon courant = t[0].getTete();
 
-            while(courant.getSuiv() != null){
-                resultat += courant.getVal() + ",";
-                courant = courant.getSuiv();
+            if(courant == null){
+                resultat += "null";
+            }else {
+                while(courant.getSuiv() != null){
+                    resultat += courant.getVal() + ",";
+                    courant = courant.getSuiv();
+                }
             }
             resultat += "\n";
         }

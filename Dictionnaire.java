@@ -1,4 +1,7 @@
 import java.math.BigInteger;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Dictionnaire {
     private HTNaive list;
@@ -79,8 +82,5 @@ public class Dictionnaire {
     public String toStringV2(){
         return this.list.toStringV2();
     }
-
-    
-
 
 }
