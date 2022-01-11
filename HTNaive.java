@@ -11,7 +11,56 @@ public class HTNaive {
         this.t = new ListeBigI[m];
 
         for(int i=0; i<m; i++){
-            t[i] = new ListeBigI(BigInteger.valueOf(i));
+            t[i] = new ListeBigI();
+        }
+    }
+
+    /**
+     * A: Constructeur de la classe HTNaive, qui prend en paramète une liste et un entier m et qui crée une table de m listes contenant les entier de la liste l.
+     * @param l
+     * @param m
+     */
+    public HTNaive(ListeBigI l, int m){
+        this.t = new ListeBigI[m];
+        Maillon courant = l.getTete();
+
+        for(int i=0; i<m; i++){
+            t[i] = new ListeBigI(courant.getVal());
+            courant = courant.getSuiv();
+        }
+    }
+
+    /**
+     * A: Constructeur de la classe HTNaive, qui prend en pramètre une liste et un entuer m et qui crée une table de m liste 
+     * @param l
+     * @param f
+     */
+    public HTNaive(ListeBigI l, double f){
+        int cardinal = l.longueur();
+        Maillon courantSup = l.getTete();
+        Maillon courantInf = l.getTete().getSuiv();
+
+        while(courantSup.getSuiv() != null){//i
+            while(courantInf.getSuiv() != null) {//j
+                if(courantSup.getVal() == courantInf.getVal()){
+                    cardinal--;
+                }
+                courantInf = courantInf.getSuiv();
+            }
+
+            courantSup = courantSup.getSuiv();
+            courantInf = courantSup.getSuiv();
+        }
+
+
+        //APPEL CONSTRUCTEUR PLUS HAUT A REVOIR
+        int longueurListe = (int) (cardinal*f);
+        this.t = new ListeBigI[longueurListe];
+        Maillon courantList = l.getTete();
+
+        for(int i=0; i<longueurListe; i++){
+            t[i] = new ListeBigI(courantList.getVal());
+            courantList = courantList.getSuiv();
         }
     }
 
@@ -59,18 +108,30 @@ public class HTNaive {
         boolean resultat = false;
 
         if(contient(u) == false){
-            ListeBigI[] Now = new ListeBigI[t.length+1];
+            if(contient(null) == false){
+                ListeBigI[] Now = new ListeBigI[t.length+1];
 
-            for(int i=0; i<Now.length; i++){
-                if(i == Now.length-1){
-                    Now[i] = new ListeBigI(u);
-                }else {
-                    Now[i] = new ListeBigI(t[i].getTete().getVal());
+                for(int i=0; i<Now.length; i++){
+                    if(i == Now.length-1){
+                        Now[i] = new ListeBigI(u);
+                    }else {
+                        Now[i] = new ListeBigI(t[i].getTete().getVal());
+                    }
+                }
+
+                this.t = Now;
+                resultat = true;
+            }else {
+                int i=0;
+                boolean found = false;
+                while(found != true && i<t.length){
+                    if(t[i] == null){
+                        t[i].getTete().setVal(u);
+                        resultat = true;
+                    }
+                    i++;
                 }
             }
-
-            this.t = Now;
-            resultat = true;
         }
 
         return resultat;
@@ -129,6 +190,65 @@ public class HTNaive {
 
         return resultat;
     }
+
+    /**
+     * A/R: Retourne le nombre de listes vides ou non de la table.
+     * @return
+     */
+    public int getNBListes(){
+        return t.length;
+    }
+
+    /**
+     * A/R: Retourne le nombre d'éléments sotckés dans la table.
+     * @return
+     */
+    public int getCardinal(){
+        int resultat = 0;
+
+        for(int i=0; i<t.length; i++){
+            resultat += t[i].longueur();
+        }
+
+        return resultat;
+    }
+
+    /**
+     * A/R: Retourne la taille de la liste la plus longue.
+     * @return
+     */
+    public int getMaxSize(){
+        int resultat = 0;
+
+        for(int i=0; i<t.length; i++){
+            if(resultat < t[i].longueur()){
+                resultat = t[i].longueur();
+            }
+        }
+
+        return resultat;
+    }
+
+    /**
+     * A/R: Retourne un string qui affiche le nom d'éléments présent dans chaque liste.
+     * @return
+     */
+    public String toStringV2(){
+        String resultat = "";
+
+        for(int i=0; i<t.length; i++){
+            int etoileNumber = this.getCardinal();
+            resultat += "t[" + i + "]: ";
+            for(int j=0; j<etoileNumber; j++){
+                resultat += "*";
+            }
+            resultat += "\n";
+        }
+
+        return resultat;
+    }
+
+
 
 
 }
