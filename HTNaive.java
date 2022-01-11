@@ -9,7 +9,6 @@ public class HTNaive {
      */
     public HTNaive(int m){
         this.t = new ListeBigI[m];
-
         for(int i=0; i<m; i++){
             t[i] = new ListeBigI();
         }
@@ -89,13 +88,13 @@ public class HTNaive {
      */
     public boolean contient(BigInteger u){
         boolean resultat = false;
-
         for(int i=0; i<t.length; i++){
-            if(t[i].getTete().getVal() == u){
-                resultat = true;
+            if(t[i].getTete()!=null){
+                if(t[i].getTete().getVal() == u){
+                    resultat = true;
+                }
             }
         }
-
         return resultat;
     }
 
@@ -115,7 +114,11 @@ public class HTNaive {
                     if(i == Now.length-1){
                         Now[i] = new ListeBigI(u);
                     }else {
-                        Now[i] = new ListeBigI(t[i].getTete().getVal());
+                        if(t[i].getTete()!=null){
+                            Now[i] = new ListeBigI(t[i].getTete().getVal());
+                        }else{
+                            Now[i] = new ListeBigI();
+                        }
                     }
                 }
 
@@ -158,13 +161,22 @@ public class HTNaive {
      * @return
      */
     public ListeBigI getElements(){
-        ListeBigI resultat = new ListeBigI(t[0].getTete().getVal());
+        ListeBigI resultat = new ListeBigI();
         Maillon courant = resultat.getTete();
 
-        for(int i=1; i<t.length; i++){
-            Maillon newMaillon = new Maillon(t[i].getTete().getVal());
-            courant.setSuiv(newMaillon);
-            courant = courant.getSuiv();
+        for(int i=0; i<t.length; i++){
+            if(t[i].getTete()!=null){
+                if(i==0){
+                    Maillon newMaillon = new Maillon(t[i].getTete().getVal());
+                    courant.setSuiv(newMaillon);
+                    courant = courant.getSuiv();
+                    
+                }else{
+                    Maillon newMaillon = new Maillon(t[i].getTete().getVal());
+                    courant.setSuiv(newMaillon);
+                    courant = courant.getSuiv();
+                }
+            }
         }
 
         return resultat;
