@@ -2,3 +2,5 @@ SAE1.02.iml
 .idea/
 out/
 *.class
+RELEASES/
+*.zip
