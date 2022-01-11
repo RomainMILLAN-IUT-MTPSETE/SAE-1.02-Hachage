@@ -6,7 +6,7 @@ public class App {
         System.out.println("APP - Program Launch");
         //Create a new test list
         HTNaive testHTNaive = new HTNaive(5);
-        //Test getter
+        /*/Test getter
         System.out.println(testHTNaive.getListe(3));
         System.out.println(testHTNaive.contient(BigInteger.valueOf(4)));
 
@@ -33,16 +33,21 @@ public class App {
             System.out.println(courantElmt.getVal());
             courantElmt = courantElmt.getSuiv();
         }
-        System.out.println("----");
+        System.out.println("----");*/
 
         //Test ToString
         System.out.println("toString HTNaive" + testHTNaive.toString());
         System.out.println(testHTNaive.getNBListes());
         System.out.println(testHTNaive.getCardinal());
+        System.out.println(testHTNaive.ajout(BigInteger.valueOf(5)));
+        System.out.println(testHTNaive.ajout(BigInteger.valueOf(4)));
+        System.out.println(testHTNaive.ajout(BigInteger.valueOf(4)));
+        System.out.println(testHTNaive.ajout(BigInteger.valueOf(4)));
+        System.out.println(testHTNaive.getCardinal());
         System.out.println(testHTNaive.getMaxSize());
         System.out.println(testHTNaive.toStringV2());
         
-        //Test
+        /*//Test
         double f = 1/2;
         HTNaive test2HtNaive = new HTNaive(addListe, f);
         System.out.println("toStringV2 HTNaive" + test2HtNaive.toStringV2());
@@ -51,7 +56,7 @@ public class App {
         System.out.println("affichage avant ajout zbq" + dic.toStringV2());
         System.out.println("true si zbq ajouté"+dic.ajout("zbq"));
         System.out.println("affichage après ajout zbq" + dic.toStringV2());
-
+*/
 
     }
 

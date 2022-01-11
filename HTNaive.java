@@ -256,7 +256,7 @@ public class HTNaive {
         String resultat = "";
 
         for(int i=0; i<t.length; i++){
-            int etoileNumber = this.getCardinal();
+            int etoileNumber = t[i].longueur();
             resultat += "t[" + i + "]: ";
             for(int j=0; j<etoileNumber; j++){
                 resultat += "*";
