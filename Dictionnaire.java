@@ -48,6 +48,11 @@ public class Dictionnaire {
         return resultat;
     }
 
+    /**
+     * A/R: Ajoute un mot convertie en ASCII
+     * @param s
+     * @return
+     */
     public boolean ajout(String s){
         boolean resultat = false;
         BigInteger stringTiBigInteger = stringToBigInteger(s);
@@ -58,6 +63,15 @@ public class Dictionnaire {
         }
 
         return resultat;
+    }
+
+    /**
+     * A/R: Retourne vrai si et seulement si s est dans le dictionnaire
+     * @param s
+     * @return
+     */
+    public boolean contient(String s){
+        return this.list.contient(stringToBigInteger(s));
     }
 
     /**
@@ -80,7 +94,7 @@ public class Dictionnaire {
      * A/R: Retourne le nombre de listes vides ou non de la table.
      * @return
      */
-    public int getNBListes(){
+    public int getNbListes(){
         return this.list.getNBListes();
     }
 
