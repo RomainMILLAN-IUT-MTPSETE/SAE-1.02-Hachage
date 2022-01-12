@@ -20,14 +20,14 @@ public class Dictionnaire {
      * @param m
      */
     public Dictionnaire(String filename, int m){
-        this.list = new HTNaive(this.calculeListeInt(filename), m);
+        this.list = new HTNaive(Dictionnaire.calculeListeInt(filename), m);
     }
 
     /**
      * A: Constructeur de la classe
      */
     public Dictionnaire(String filename, double f){
-        this.list = new HTNaive(this.calculeListeInt(filename), lectureMotsTexte(filename)*f);
+        this.list = new HTNaive(Dictionnaire.calculeListeInt(filename), f);
     }
 
     /**
@@ -150,24 +150,27 @@ public class Dictionnaire {
         File f = new File(fileName);
         ListeBigI res = new ListeBigI();
         Scanner sc;
-
         try {
             sc = new Scanner(f);
         } catch (FileNotFoundException e) {
             System.out.println(("problème d’accès au fichier " + e.getMessage()));
             return null;
         }
-
         sc.useDelimiter(", |. | |\\n|,|;|:|\\.|!|\\?|-");
         String mot;
-
         while (sc.hasNext()) {
             mot = sc.next();
             res.ajoutTete(Dictionnaire.stringToBigInteger(mot));
         }
-
         sc.close();
         return res;
+    }
+
+    public long getTotalTimeh() {
+        return this.list.getTotalTimeh();
+    }
+    public long getTotalTimeContient() {
+        return this.list.getTotalTimeContient();
     }
 
 

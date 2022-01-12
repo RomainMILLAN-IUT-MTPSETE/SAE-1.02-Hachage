@@ -2,6 +2,8 @@ import java.math.BigInteger;
 
 public class HTNaive {
     private static ListeBigI[] t;
+    private long totalTimeh;
+    private long totalTimeContient;
 
     /**
      * A: Contructeur de la classe HTNaive, qui prend en paramètre un entier et qui crée une liste de m entier.
@@ -9,6 +11,8 @@ public class HTNaive {
      */
     public HTNaive(int m){
         this.t = new ListeBigI[m];
+        this.totalTimeContient = 0;
+        this.totalTimeh = 0;
         for(int i=0; i<m; i++){
             this.t[i] = new ListeBigI();
         }
@@ -29,16 +33,13 @@ public class HTNaive {
      * @param l
      * @param f
      */
-    public HTNaive(ListeBigI l, double f){
-        HTNaive temp = new HTNaive(l, 1000);
-        int m = (int) (f * temp.getCardinal());
-        
-        //Appel au constructeur ne fonctionne pas
-        this.t = new ListeBigI[m];
-        for(int i=0; i<m; i++){
-            this.t[i] = new ListeBigI();
-        }
-        this.ajoutListe(l);
+    public HTNaive(ListeBigI l, double f) {
+        this(l, (int) (f * HTNaive.HTNaiveTemp(l).getCardinal()));
+    }
+
+    private static HTNaive HTNaiveTemp(ListeBigI l) {
+        HTNaive temporaire = new HTNaive(l, 1000);
+        return temporaire;
     }
 
     /**
@@ -50,13 +51,25 @@ public class HTNaive {
         return this.t[i];
     }
 
+    public long getTotalTimeh() {
+        return this.totalTimeh;
+    }
+
+    public long getTotalTimeContient() {
+        return this.totalTimeContient;
+    }
+
     /**
      * A/R: retourne un entier, celui ci est défini par la valeur de u modulo la valeur de la longueur du tableau.
      * @param u
      * @return
      */
     public int h(BigInteger u){
-        return (u.intValue() % t.length);
+        long deb = System.currentTimeMillis();
+        int res = u.mod(BigInteger.valueOf(this.t.length)).intValue();
+        long fin = System.currentTimeMillis();
+        this.totalTimeh += (fin - deb);
+        return res;
     }
 
     /**
@@ -65,14 +78,13 @@ public class HTNaive {
      * @return
      */
     public boolean contient(BigInteger u){
+        long deb = System.currentTimeMillis();
         boolean resultat = false;
-        for(int i=0; i<t.length; i++){
-            if(t[i].getTete()!=null){
-                if(t[i].getTete().getVal() == u){
-                    resultat = true;
-                }
-            }
+        if(this.t[this.h(u)].contient(u) == true){
+            resultat = true;
         }
+        long fin = System.currentTimeMillis();
+        this.totalTimeContient += (fin - deb);
         return resultat;
     }
 
@@ -86,7 +98,7 @@ public class HTNaive {
 
         if(this.contient(u) == false){
             this.t[this.h(u)].ajoutTete(u);
-            return true;
+            resultat = true;
         }
 
         return resultat;
@@ -99,10 +111,8 @@ public class HTNaive {
      */
     public void ajoutListe(ListeBigI L){
         ListeBigI listeCourante = new ListeBigI(L);
-        BigInteger a;
-        while (listeCourante.estVide() == false) {
-            a = listeCourante.supprTete();
-            this.ajout(a);
+        while (listeCourante.estVide() == false){
+            this.ajout(listeCourante.supprTete());
         }
     }
 
