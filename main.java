@@ -1,7 +1,10 @@
+import java.util.Random;
+
 public class main {
 
-    public void main(String[] args){
-        Dictionnaire d = new Dictionnaire("LeRougeEtLeNoir.txt", 1);
+    public static void main(String[] args){
+        Dictionnaire d = new Dictionnaire("randomWordsPetit", 4);
+        Random random = new Random();
 
         System.out.println("maxSize : " + d.getMaxSize());
         System.out.println("cardinal : " + d.getCardinal());
@@ -15,9 +18,9 @@ public class main {
             char[] mot = new char[tailleMot];
 
             for (int j = 0; j < mot.length; j++) {
-                mot[j] = (char) (’a’ + random.nextInt(26));
+                mot[j] = (char) ('a' + random.nextInt(26));
             }
-            
+
             String motS = new String(mot);
             d.contient(motS);//on ne récupère même pas le résultat de la recherche!
         }

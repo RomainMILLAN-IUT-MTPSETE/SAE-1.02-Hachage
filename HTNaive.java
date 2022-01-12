@@ -10,7 +10,7 @@ public class HTNaive {
     public HTNaive(int m){
         this.t = new ListeBigI[m];
         for(int i=0; i<m; i++){
-            t[i] = new ListeBigI();
+            this.t[i] = new ListeBigI();
         }
     }
 
@@ -20,13 +20,8 @@ public class HTNaive {
      * @param m
      */
     public HTNaive(ListeBigI l, int m){
-        this.t = new ListeBigI[m];
-        Maillon courant = l.getTete();
-
-        for(int i=0; i<m; i++){
-            t[i] = new ListeBigI(courant.getVal());
-            courant = courant.getSuiv();
-        }
+        this(m);
+        this.ajoutListe(l);
     }
 
     /**
@@ -35,32 +30,15 @@ public class HTNaive {
      * @param f
      */
     public HTNaive(ListeBigI l, double f){
-        int cardinal = l.longueur();
-        Maillon courantSup = l.getTete();
-        Maillon courantInf = l.getTete().getSuiv();
-
-        while(courantSup.getSuiv() != null){//i
-            while(courantInf.getSuiv() != null) {//j
-                if(courantSup.getVal() == courantInf.getVal()){
-                    cardinal--;
-                }
-                courantInf = courantInf.getSuiv();
-            }
-
-            courantSup = courantSup.getSuiv();
-            courantInf = courantSup.getSuiv();
+        HTNaive temp = new HTNaive(l, 1000);
+        int m = (int) (f * temp.getCardinal());
+        
+        //Appel au constructeur ne fonctionne pas
+        this.t = new ListeBigI[m];
+        for(int i=0; i<m; i++){
+            this.t[i] = new ListeBigI();
         }
-
-
-        //APPEL CONSTRUCTEUR PLUS HAUT A REVOIR
-        int longueurListe = (int) (cardinal*f);
-        this.t = new ListeBigI[longueurListe];
-        Maillon courantList = l.getTete();
-
-        for(int i=0; i<longueurListe; i++){
-            t[i] = new ListeBigI(courantList.getVal());
-            courantList = courantList.getSuiv();
-        }
+        this.ajoutListe(l);
     }
 
     /**
@@ -69,7 +47,7 @@ public class HTNaive {
      * @return
      */
     public ListeBigI getListe(int i){
-        return t[i];
+        return this.t[i];
     }
 
     /**
@@ -106,35 +84,9 @@ public class HTNaive {
     public boolean ajout(BigInteger u){
         boolean resultat = false;
 
-        if(contient(u) == false){
-            if(contient(null) == false){
-                ListeBigI[] Now = new ListeBigI[t.length+1];
-
-                for(int i=0; i<Now.length; i++){
-                    if(i == Now.length-1){
-                        Now[i] = new ListeBigI(u);
-                    }else {
-                        if(t[i].getTete()!=null){
-                            Now[i] = new ListeBigI(t[i].getTete().getVal());
-                        }else{
-                            Now[i] = new ListeBigI();
-                        }
-                    }
-                }
-
-                this.t = Now;
-                resultat = true;
-            }else {
-                int i=0;
-                boolean found = false;
-                while(found != true && i<t.length){
-                    if(t[i] == null){
-                        t[i].getTete().setVal(u);
-                        resultat = true;
-                    }
-                    i++;
-                }
-            }
+        if(this.contient(u) == false){
+            this.t[this.h(u)].ajoutTete(u);
+            return true;
         }
 
         return resultat;
@@ -146,13 +98,11 @@ public class HTNaive {
      * @param L
      */
     public void ajoutListe(ListeBigI L){
-        Maillon courant = L.getTete();
-
-        while(courant.getSuiv() != null){
-
-            this.ajout(courant.getVal());
-
-            courant = courant.getSuiv();
+        ListeBigI listeCourante = new ListeBigI(L);
+        BigInteger a;
+        while (listeCourante.estVide() == false) {
+            a = listeCourante.supprTete();
+            this.ajout(a);
         }
     }
 
@@ -161,28 +111,13 @@ public class HTNaive {
      * @return
      */
     public ListeBigI getElements(){
-        ListeBigI resultat = new ListeBigI();
-        Maillon courant = resultat.getTete();
+        ListeBigI l = new ListeBigI();
 
-        for(int i=0; i<t.length; i++){
-            if(resultat.getTete() == null){
-                if(t[i].getTete() != null){
-                    resultat.ajoutTete(t[i].getTete().getVal());
-                    
-                }
-            }else {
-                if(courant == null){
-                    courant = resultat.getTete();
-                }
-                if(t[i].getTete() != null && t[i].getTete().getVal() != null){
-                    Maillon newMaillon = new Maillon(t[i].getTete().getVal());
-                    courant.setSuiv(newMaillon);
-                    courant = courant.getSuiv();
-                }
-            }
+        for(int i=0; i<this.t.length; i++){
+            l.ajoutListe(this.t[i]);
         }
 
-        return resultat;
+        return l;
     }
 
     /**
@@ -196,13 +131,9 @@ public class HTNaive {
             resultat += "t[" + i + "]: ";
             Maillon courant = t[0].getTete();
 
-            if(courant == null){
-                resultat += "null";
-            }else {
-                while(courant.getSuiv() != null){
-                    resultat += courant.getVal() + ",";
-                    courant = courant.getSuiv();
-                }
+            while(courant.getSuiv() != null){
+                resultat += courant.getVal() + ",";
+                courant = courant.getSuiv();
             }
             resultat += "\n";
         }
@@ -215,7 +146,7 @@ public class HTNaive {
      * @return
      */
     public int getNBListes(){
-        return t.length;
+        return this.t.length;
     }
 
     /**
@@ -223,13 +154,7 @@ public class HTNaive {
      * @return
      */
     public int getCardinal(){
-        int resultat = 0;
-
-        for(int i=0; i<t.length; i++){
-            resultat += t[i].longueur();
-        }
-
-        return resultat;
+        return this.getElements().longueur();
     }
 
     /**
@@ -239,9 +164,9 @@ public class HTNaive {
     public int getMaxSize(){
         int resultat = 0;
 
-        for(int i=0; i<t.length; i++){
-            if(resultat < t[i].longueur()){
-                resultat = t[i].longueur();
+        for(int i=0; i<this.t.length; i++){
+            if(resultat < this.t[i].longueur()){
+                resultat = this.t[i].longueur();
             }
         }
 
@@ -256,12 +181,13 @@ public class HTNaive {
         String resultat = "";
 
         for(int i=0; i<t.length; i++){
-            int etoileNumber = t[i].longueur();
-            resultat += "t[" + i + "]: ";
-            for(int j=0; j<etoileNumber; j++){
-                resultat += "*";
+            if(this.t[i].estVide() == false){
+                resultat += "t[" + i + "]: ";
+                for(int j=0; j<this.t[i].longueur(); j++){
+                    resultat += "*";
+                }
+                resultat += "\n";
             }
-            resultat += "\n";
         }
 
         return resultat;

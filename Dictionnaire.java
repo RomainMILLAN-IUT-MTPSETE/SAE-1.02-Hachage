@@ -20,14 +20,14 @@ public class Dictionnaire {
      * @param m
      */
     public Dictionnaire(String filename, int m){
-        this.list = new HTNaive(calculeListeInt(filename), m);
+        this.list = new HTNaive(this.calculeListeInt(filename), m);
     }
 
     /**
      * A: Constructeur de la classe
      */
     public Dictionnaire(String filename, double f){
-        this.list = new HTNaive(calculeListeInt(filename), lectureMotsTexte(filename)*f);
+        this.list = new HTNaive(this.calculeListeInt(filename), lectureMotsTexte(filename)*f);
     }
 
     /**
@@ -55,10 +55,9 @@ public class Dictionnaire {
      */
     public boolean ajout(String s){
         boolean resultat = false;
-        BigInteger stringTiBigInteger = stringToBigInteger(s);
+        BigInteger val = this.stringToBigInteger(s);
 
-        if(list.contient(stringTiBigInteger) == false){
-            list.ajout(stringTiBigInteger);
+        if(this.list.ajout(val) == true){
             resultat = true;
         }
 
@@ -148,40 +147,27 @@ public class Dictionnaire {
     }
 
     public static ListeBigI calculeListeInt(String fileName){
-        ListeBigI resultat = new ListeBigI();
-
-        //on suppose que fichier.txt est un fichier dans le meme dossier
-        //que les .java
         File f = new File(fileName);
         ListeBigI res = new ListeBigI();
         Scanner sc;
-        //un scanner est un objet permettant de "scanner" (parcourir)
-        //une entrée (clavier, ou une chaîne, ou un File, etc)
+
         try {
             sc = new Scanner(f);
-            //ici on construit le scanner avec comme entrée f
-            //cette construction peut échouer (si par exemple fichier.txt n’existe pas)
-        }catch(FileNotFoundException e){
-            //si la construction échoue, on passe ici
+        } catch (FileNotFoundException e) {
             System.out.println(("problème d’accès au fichier " + e.getMessage()));
-            return 0;
-        }
-        sc.useDelimiter(" |\\n|,|;|:|\\.|!|\\?|-");
-        //on définit les délimiteurs comme le caractère ’\n’, le caractère ’,’ etc...
-        //cela définit maintenant la notion de "morceau" comme une suite
-        //de caractères entre deux délimiteurs
-        int nbmots = 0;
-        while (sc.hasNext()) { //sc.hasNext() renvoie vrai ssi
-            //il reste encore un morceau à découvrir dans f
-            String mot = sc.next(); //sc.next() renvoie le prochain morceau
-            if(resultat.getTete() == null){
-                resultat.ajoutTete(stringToBigInteger(mot));
-            }else {
-                resultat.ajoutFin(stringToBigInteger(mot));
-            }
+            return null;
         }
 
-        return resultat;
+        sc.useDelimiter(", |. | |\\n|,|;|:|\\.|!|\\?|-");
+        String mot;
+
+        while (sc.hasNext()) {
+            mot = sc.next();
+            res.ajoutTete(Dictionnaire.stringToBigInteger(mot));
+        }
+
+        sc.close();
+        return res;
     }
 
 

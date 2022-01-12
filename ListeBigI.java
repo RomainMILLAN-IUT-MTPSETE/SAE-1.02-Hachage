@@ -64,7 +64,7 @@ public class ListeBigI {
     }
 
     public boolean estVide() {
-	return (this.tete == null) ;
+		return (this.tete == null) ;
     }
 	 
     //public int valTete () {
@@ -113,13 +113,13 @@ public class ListeBigI {
     /** Longueur d'une liste
      */
     public int longueur () {
-	int lg = 0;
-	Maillon courant = this.tete;
-	while (courant != null) {
-	    lg++;
-	    courant = courant.getSuiv();
-	}
-	return lg;
+		int lg = 0;
+		Maillon courant = this.tete;
+		while (courant != null) {
+			lg++;
+			courant = courant.getSuiv();
+		}
+		return lg;
     }
 
 
