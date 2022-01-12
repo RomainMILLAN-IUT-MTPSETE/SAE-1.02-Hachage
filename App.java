@@ -37,7 +37,7 @@ public class App {
 
         //Test ToString
         System.out.println("toString HTNaive" + testHTNaive.toString());
-        System.out.println(testHTNaive.getNBListes());
+        //System.out.println(testHTNaive.getNBListes());
         System.out.println(testHTNaive.getCardinal());
         System.out.println(testHTNaive.ajout(BigInteger.valueOf(5)));
         System.out.println(testHTNaive.ajout(BigInteger.valueOf(4)));

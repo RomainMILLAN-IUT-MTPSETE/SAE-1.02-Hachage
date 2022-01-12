@@ -111,7 +111,7 @@ public class HTNaive {
      */
     public void ajoutListe(ListeBigI L){
         ListeBigI listeCourante = new ListeBigI(L);
-        while (listeCourante.estVide() == false){
+        while (!listeCourante.estVide()){
             this.ajout(listeCourante.supprTete());
         }
     }
@@ -138,14 +138,7 @@ public class HTNaive {
         String resultat = "";
 
         for(int i=0; i<t.length; i++){
-            resultat += "t[" + i + "]: ";
-            Maillon courant = t[0].getTete();
-
-            while(courant.getSuiv() != null){
-                resultat += courant.getVal() + ",";
-                courant = courant.getSuiv();
-            }
-            resultat += "\n";
+            resultat += "t[" + i + "]: " + this.t[i].toString() + "\n";
         }
 
         return resultat;
@@ -155,7 +148,7 @@ public class HTNaive {
      * A/R: Retourne le nombre de listes vides ou non de la table.
      * @return
      */
-    public int getNBListes(){
+    public int getNbListes(){
         return this.t.length;
     }
 

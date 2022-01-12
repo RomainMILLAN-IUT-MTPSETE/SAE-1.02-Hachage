@@ -36,13 +36,12 @@ public class Dictionnaire {
      * @return
      */
     private static BigInteger stringToBigInteger(String s){
-        BigInteger resultat = BigInteger.valueOf(0);
+        BigInteger resultat = new BigInteger("0");
+        BigInteger multiplieur = new BigInteger("1");
 
-        for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
-            int index = c;
-
-            resultat = resultat.add(BigInteger.valueOf((long) (index*Math.pow(256, i))));
+        for(int i=s.length()-1; 0<=i; i--){
+            resultat = resultat.add(BigInteger.valueOf((int) s.charAt(i)).multiply(multiplieur));
+            multiplieur = multiplieur.multiply(BigInteger.valueOf(256));
         }
 
         return resultat;
@@ -55,7 +54,7 @@ public class Dictionnaire {
      */
     public boolean ajout(String s){
         boolean resultat = false;
-        BigInteger val = this.stringToBigInteger(s);
+        BigInteger val = Dictionnaire.stringToBigInteger(s);
 
         if(this.list.ajout(val) == true){
             resultat = true;
@@ -94,7 +93,7 @@ public class Dictionnaire {
      * @return
      */
     public int getNbListes(){
-        return this.list.getNBListes();
+        return this.list.getNbListes();
     }
 
     /**
