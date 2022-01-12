@@ -77,7 +77,7 @@ public class HTNaive {
      * @param u
      * @return
      */
-    private static int h(BigInteger u){
+    public int h(BigInteger u){
         return (u.intValue() % t.length);
     }
 
