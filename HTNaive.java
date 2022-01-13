@@ -111,7 +111,7 @@ public class HTNaive {
      */
     public void ajoutListe(ListeBigI L){
         ListeBigI listeCourante = new ListeBigI(L);
-        while (!listeCourante.estVide()){
+        while (listeCourante.estVide() == false){
             this.ajout(listeCourante.supprTete());
         }
     }
