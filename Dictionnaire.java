@@ -155,7 +155,7 @@ public class Dictionnaire {
             System.out.println(("problème d’accès au fichier " + e.getMessage()));
             return null;
         }
-        sc.useDelimiter(", |. | |\\n|,|;|:|\\.|!|\\?|-");
+        sc.useDelimiter(" |\\n|,|;|:|\\.|!|\\?|-");
         String mot;
         while (sc.hasNext()) {
             mot = sc.next();

@@ -23,4 +23,4 @@
   Donc: (k²+k)/2 multiplications possibles.
  
   ### Question 27:
-  Il y a 16280 mots différents dans le texte.
+  Il y a 14445 mots différents dans le texte.
