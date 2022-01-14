@@ -4,6 +4,9 @@
  ## Description
  Ce repositorie repose sur un projet scolaire que nous avons du faire. Nous sommes actuellement en 1er année de B.U.T. Informatique et dans le cadre du projet S1.02 nomée Hachage nous avons alors crée ce repositorie.
  
+## Comment tester le script ?
+Télécharger le fichier qui est disponible [ici](https://github.com/Wabez3ter/SAE1.02/releases), ensuite deziper et enfin lancer le **'launch - Linux'** ou le **'launch - Window'**, tous dépend de votre Système d'exploitation.
+ 
  ## Questions & Réponses
  ### Question n°1:
   ![image](https://user-images.githubusercontent.com/42139000/149302375-7b4584db-085b-4fe3-ad2d-253c673fb3de.png)
