@@ -3,6 +3,8 @@ import java.util.Random;
 public class main {
 
     public static void main(String[] args) {
+        System.out.print("Bonjour et bienvenue sur le programme S.A.E. 1.02 - Hachage\nprogramme realisee par: MILLAN Romain, PIERRE Geoffrey, HENRICHI Adam & CARON Florimond\n\nVeuilliez entrer le fichier auquel vous souhaitez cree un dictionnaire (Exemple: 'LeRougeEtLeNoir.txt'): "); String fileName = Ut.saisirChaine();
+        System.out.print("\nVeuilliez saisir la dimension du disctionnaire: "); double f = Ut.saisirDouble();
 
         Random ran = new Random();
         
@@ -10,8 +12,9 @@ public class main {
         // Dictionnaire d = new Dictionnaire("randomWordsPetit.txt", 50);
  
         // pour un dico créé à partir du fichier radnomWords.txt avec f appartenant à {0.01,0.1,0.5,1}
-        Dictionnaire d = new Dictionnaire("LeRougeEtLeNoir.txt", 0.7);
+        Dictionnaire d = new Dictionnaire(fileName, f);
 
+        System.out.println("\n\nResultat");
         System.out.println("maxSize : " + d.getMaxSize());
         System.out.println("cardinal : " + d.getCardinal());
         System.out.println("nbListes : " + d.getNbListes());
